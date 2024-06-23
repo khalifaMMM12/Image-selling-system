@@ -1,40 +1,49 @@
 <?php
 session_start();
 include_once '../includes/db.php';
-include_once '../includes/functions.php';
+include_once '../includes/function.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize and validate input
     $username = sanitize_input($_POST['username']);
     $email = sanitize_input($_POST['email']);
-    $password = $_POST['password']; // No need to sanitize as it will be hashed
-
-    // Hash the password
-    $hashed_password = hash_password($password);
+    $password = sanitize_input($_POST['password']);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Check if username or email already exists
     $sql = "SELECT * FROM users WHERE username='$username' OR email='$email'";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        echo "Username or email already exists.";
-    } else {
-        // Insert user into database
+    if ($result->num_rows == 0) {
+        // Insert new user into database
         $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
         if ($conn->query($sql) === TRUE) {
-            // Registration successful
             $_SESSION['user_id'] = $conn->insert_id;
             redirect('dashboard.php');
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
+    } else {
+        echo "Username or email already exists.";
     }
 }
 ?>
-<!-- HTML form for registration -->
-<form method="post">
-    <input type="text" name="username" placeholder="Username" required><br>
-    <input type="email" name="email" placeholder="Email" required><br>
-    <input type="password" name="password" placeholder="Password" required><br>
-    <button type="submit">Register</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <h1>User Registration</h1>
+    <form method="post">
+        <input type="text" name="username" placeholder="Username" required><br>
+        <input type="email" name="email" placeholder="Email" required><br>
+        <input type="password" name="password" placeholder="Password" required><br>
+        <button type="submit">Register</button>
+    </form>
+    <br>
+    <a href="login.php">Already have an account? Login here.</a>
+</body>
+</html>

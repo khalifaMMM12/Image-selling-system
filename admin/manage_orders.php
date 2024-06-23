@@ -8,8 +8,8 @@ if (!isset($_SESSION['admin_id'])) {
     redirect('login.php');
 }
 
-// Fetch all users from database
-$sql = "SELECT * FROM users";
+// Fetch all orders from database
+$sql = "SELECT * FROM orders";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
@@ -17,28 +17,32 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Users</title>
+    <title>Manage Orders</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <h1>Manage Users</h1>
+    <h1>Manage Orders</h1>
     <table>
         <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Email</th>
+            <th>Order ID</th>
+            <th>User ID</th>
+            <th>Details</th>
+            <th>Total Price</th>
+            <th>Date</th>
         </tr>
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>{$row['id']}</td>";
-                echo "<td>{$row['username']}</td>";
-                echo "<td>{$row['email']}</td>";
+                echo "<td>{$row['user_id']}</td>";
+                echo "<td>{$row['details']}</td>";
+                echo "<td>{$row['total_price']}</td>";
+                echo "<td>{$row['date']}</td>";
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='3'>No users found.</td></tr>";
+            echo "<tr><td colspan='5'>No orders found.</td></tr>";
         }
         ?>
     </table>

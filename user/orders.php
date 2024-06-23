@@ -1,7 +1,7 @@
 <?php
 session_start();
 include_once '../includes/db.php';
-include_once '../includes/functions.php';
+include_once '../includes/function.php';
 
 // Check if user is logged in
 if (!is_logged_in()) {
