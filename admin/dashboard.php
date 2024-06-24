@@ -5,7 +5,7 @@ include_once '../includes/function.php';
 
 // Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
-    redirect('login.php');
+    redirect('../index.php');
 }
 ?>
 <!DOCTYPE html>
@@ -17,6 +17,15 @@ if (!isset($_SESSION['admin_id'])) {
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="manage_users.php">Manage Users</a></li>
+            <li><a href="manage_images.php">Manage Images</a></li>
+            <li><a href="manage_orders.php">Manage Orders</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+    </nav>
     <h1>Admin Dashboard</h1>
     <ul>
         <li><a href="manage_users.php">Manage Users</a></li>

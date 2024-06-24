@@ -8,24 +8,28 @@ if (!isset($_SESSION['user_id'])) {
     redirect('user/login.php');
 }
 
-$image_id = sanitize_input($_POST['image_id']);
-$user_id = $_SESSION['user_id'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $image_id = sanitize_input($_POST['image_id']);
+    $user_id = $_SESSION['user_id'];
 
-// Check if image is already in cart
-$sql = "SELECT * FROM cart WHERE user_id='$user_id' AND image_id='$image_id'";
-$result = $conn->query($sql);
+    // Check if image is already in the cart
+    $sql = "SELECT * FROM cart WHERE user_id='$user_id' AND image_id='$image_id'";
+    $result = $conn->query($sql);
 
-if ($result->num_rows == 0) {
-    // Insert image into cart
-    $sql = "INSERT INTO cart (user_id, image_id) VALUES ('$user_id', '$image_id')";
-    if ($conn->query($sql) === TRUE) {
-        echo "Image added to cart.";
+    if ($result->num_rows == 0) {
+        // Insert image into the cart
+        $sql = "INSERT INTO cart (user_id, image_id) VALUES ('$user_id', '$image_id')";
+        if ($conn->query($sql) === TRUE) {
+            echo "Image added to cart.";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Image already in the cart.";
     }
-} else {
-    echo "Image already in cart.";
-}
 
-redirect('user/cart.php');
+    redirect('user/cart.php');
+} else {
+    echo "Invalid request method.";
+}
 ?>
