@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Fetch all images from database
-$sql = "SELECT * FROM images";
+$sql = "SELECT * FROM images WHERE approved=TRUE";
 $result = $conn->query($sql);
 ?>
 

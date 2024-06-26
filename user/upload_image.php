@@ -24,10 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($check !== false) {
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
             $filename = basename($_FILES["image"]["name"]);
-            // Insert image details into database
-            $sql = "INSERT INTO images (title, description, price, filename, user_id) VALUES ('$title', '$description', '$price', '$filename', '$user_id')";
+            // Insert image details into database with approved set to FALSE
+            $sql = "INSERT INTO images (title, description, price, filename, user_id, approved) VALUES ('$title', '$description', '$price', '$filename', '$user_id', FALSE)";
             if ($conn->query($sql) === TRUE) {
-                echo "Image uploaded successfully.";
+                echo "Image uploaded successfully and is pending approval.";
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }

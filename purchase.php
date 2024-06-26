@@ -18,21 +18,46 @@ if ($result->num_rows > 0) {
     $order_details = "";
     $total_price = 0;
 
-    while ($row = $result->fetch_assoc()) {
-        $order_details .= "Image: {$row['title']} - Price: \${$row['price']}\n";
-        $total_price += $row['price'];
-    }
+    // Start transaction
+    $conn->begin_transaction();
 
-    // Insert order into database
-    $sql = "INSERT INTO orders (user_id, details, total_price) VALUES ('$user_id', '$order_details', '$total_price')";
-    if ($conn->query($sql) === TRUE) {
-        // Clear user's cart
-        $sql = "DELETE FROM cart WHERE user_id='$user_id'";
-        $conn->query($sql);
+    try {
+        while ($row = $result->fetch_assoc()) {
+            $order_details .= "Image: {$row['title']} - Price: ₦{$row['price']}\n";
+            $total_price += $row['price'];
+        }
 
-        echo "Purchase completed successfully.";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        // Insert order into database
+        $sql = "INSERT INTO orders (user_id, total_price) VALUES ('$user_id', '$total_price')";
+        if ($conn->query($sql) === TRUE) {
+            $order_id = $conn->insert_id;
+
+            // Add order items
+            $result->data_seek(0); // Reset result pointer to the beginning
+            while ($row = $result->fetch_assoc()) {
+                $image_id = $row['image_id'];
+                $sql = "INSERT INTO order_items (order_id, image_id) VALUES ('$order_id', '$image_id')";
+                if (!$conn->query($sql)) {
+                    throw new Exception("Error inserting order items: " . $conn->error);
+                }
+            }
+
+            // Clear user's cart
+            $sql = "DELETE FROM cart WHERE user_id='$user_id'";
+            if (!$conn->query($sql)) {
+                throw new Exception("Error clearing cart: " . $conn->error);
+            }
+
+            // Commit transaction
+            $conn->commit();
+            echo "Purchase completed successfully.";
+        } else {
+            throw new Exception("Error inserting order: " . $conn->error);
+        }
+    } catch (Exception $e) {
+        // Rollback transaction on error
+        $conn->rollback();
+        echo "Purchase failed: " . $e->getMessage();
     }
 } else {
     echo "Your cart is empty.";

@@ -41,30 +41,34 @@ $orders_result = $conn->query($sql);
             echo "<p>Order ID: {$order['order_id']}</p>";
             echo "<p>Order Date: {$order['created_at']}</p>";
             echo "<p>Total Price: ₦{$order['total_price']}</p>";
-            
+
             // Fetch order items
             $order_id = $order['order_id'];
-            $sql = "SELECT images.title, images.filename, images.price 
-                    FROM order_items 
-                    JOIN images ON order_items.image_id = images.image_id 
-                    WHERE order_items.order_id='$order_id'";
-            $items_result = $conn->query($sql);
+            $sql_items = "SELECT images.title, images.filename, images.price 
+                          FROM order_items 
+                          JOIN images ON order_items.image_id = images.image_id 
+                          WHERE order_items.order_id='$order_id'";
+            $items_result = $conn->query($sql_items);
             
-            if ($items_result->num_rows > 0) {
-                echo "<h3>Purchased Images:</h3>";
-                echo "<div class='order-items'>";
-                while ($item = $items_result->fetch_assoc()) {
-                    echo "<div class='order-item'>";
-                    echo "<img src='./images/{$item['filename']}' alt='{$item['title']}'><br>";
-                    echo "<p>{$item['title']}</p>";
-                    echo "<p>Price: ₦{$item['price']}</p>";
+            if ($items_result) {
+                if ($items_result->num_rows > 0) {
+                    echo "<h3>Purchased Images:</h3>";
+                    echo "<div class='order-items'>";
+                    while ($item = $items_result->fetch_assoc()) {
+                        echo "<div class='order-item'>";
+                        echo "<img src='../images/{$item['filename']}' alt='{$item['title']}'><br>";
+                        echo "<p>{$item['title']}</p>";
+                        echo "<p>Price: ₦{$item['price']}</p>";
+                        echo "</div>";
+                    }
                     echo "</div>";
+                } else {
+                    echo "<p>No items found for this order.</p>";
                 }
-                echo "</div>";
             } else {
-                echo "<p>No items found for this order.</p>";
+                echo "<p>Error fetching order items: " . $conn->error . "</p>";
             }
-            
+
             echo "</div><hr>";
         }
     } else {
