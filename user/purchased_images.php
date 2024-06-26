@@ -11,7 +11,7 @@ if (!is_logged_in()) {
 $user_id = $_SESSION['user_id'];
 
 // Fetch user's purchased images from database
-$sql = "SELECT * FROM images WHERE id IN (SELECT DISTINCT id FROM orders WHERE user_id='$user_id')";
+$sql = "SELECT * FROM images WHERE image_id IN (SELECT DISTINCT order_id FROM orders WHERE user_id='$user_id')";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>

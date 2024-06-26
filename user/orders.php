@@ -28,15 +28,15 @@ $orders_result = $conn->query($sql);
     if ($orders_result->num_rows > 0) {
         while ($order = $orders_result->fetch_assoc()) {
             echo "<div>";
-            echo "<p>Order ID: {$order['id']}</p>";
+            echo "<p>Order ID: {$order['order_id']}</p>";
             echo "<p>Order Date: {$order['created_at']}</p>";
             echo "<p>Total Price: ₦{$order['total_price']}</p>";
             
             // Fetch order items
-            $order_id = $order['id'];
+            $order_id = $order['order_id'];
             $sql = "SELECT images.title, images.filename, images.price 
                     FROM order_items 
-                    JOIN images ON order_items.image_id = images.id 
+                    JOIN images ON order_items.image_id = images.image_id 
                     WHERE order_items.order_id='$order_id'";
             $items_result = $conn->query($sql);
             

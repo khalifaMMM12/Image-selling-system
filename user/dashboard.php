@@ -28,6 +28,7 @@ $result = $conn->query($sql);
             <li><a href="cart.php">Cart</a></li>
             <li><a href="orders.php">My Orders</a></li>
             <li><a href="upload_image.php">Upload Image</a></li>
+            <li><a href="purchased_images.php">Purchased Images</a></li>
             <li><a href="../logout.php">Logout</a></li>
         </ul>
     </nav>
@@ -42,7 +43,7 @@ $result = $conn->query($sql);
                 echo "<p>{$row['description']}</p>";
                 echo "<p>Price: ₦{$row['price']}</p>";
                 echo "<form method='post' action='../add_to_cart.php'>";
-                echo "<input type='hidden' name='image_id' value='{$row['id']}'>";
+                echo "<input type='hidden' name='image_id' value='{$row['image_id']}'>";
                 echo "<button type='submit'>Add to Cart</button>";
                 echo "</form>";
                 echo "</div>";

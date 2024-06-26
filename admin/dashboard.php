@@ -23,7 +23,7 @@ if (!isset($_SESSION['admin_id'])) {
             <li><a href="manage_users.php">Manage Users</a></li>
             <li><a href="manage_images.php">Manage Images</a></li>
             <li><a href="manage_orders.php">Manage Orders</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <li><a href="../logout.php">Logout</a></li>
         </ul>
     </nav>
     <h1>Admin Dashboard</h1>
@@ -31,7 +31,7 @@ if (!isset($_SESSION['admin_id'])) {
         <li><a href="manage_users.php">Manage Users</a></li>
         <li><a href="manage_images.php">Manage Images</a></li>
         <li><a href="manage_orders.php">Manage Orders</a></li>
-        <li><a href="logout.php">Logout</a></li>
+        <li><a href="../logout.php">Logout</a></li>
     </ul>
 </body>
 </html>

@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Fetch cart items from database
-$sql = "SELECT images.* FROM cart JOIN images ON cart.image_id = images.id WHERE cart.user_id='$user_id'";
+$sql = "SELECT images.* FROM cart JOIN images ON cart.image_id = images.image_id WHERE cart.user_id='$user_id'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -19,7 +19,7 @@ if ($result->num_rows > 0) {
     $total_price = 0;
 
     while ($row = $result->fetch_assoc()) {
-        $order_details .= "Image: {$row['title']} - Price: ₦{$row['price']}\n";
+        $order_details .= "Image: {$row['title']} - Price: \${$row['price']}\n";
         $total_price += $row['price'];
     }
 

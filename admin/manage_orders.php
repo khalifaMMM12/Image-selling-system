@@ -38,7 +38,7 @@ $result = $conn->query($sql);
                 echo "<td>{$row['user_id']}</td>";
                 echo "<td>{$row['details']}</td>";
                 echo "<td>{$row['total_price']}</td>";
-                echo "<td>{$row['date']}</td>";
+                echo "<td>{$row['created_at']}</td>";
                 echo "</tr>";
             }
         } else {

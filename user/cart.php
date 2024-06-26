@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Fetch cart items from database
-$sql = "SELECT images.* FROM cart JOIN images ON cart.image_id = images.id WHERE cart.user_id='$user_id'";
+$sql = "SELECT images.* FROM cart JOIN images ON cart.image_id = images.image_id WHERE cart.user_id='$user_id'";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
@@ -42,7 +42,7 @@ $result = $conn->query($sql);
         }
         ?>
     </div>
-    <h2>Total Price: $<?php echo $total_price; ?></h2>
+    <h2>Total Price: ₦<?php echo $total_price; ?></h2>
     <?php if ($total_price > 0) : ?>
         <form method="post" action="../purchase.php">
             <button type="submit">Proceed to Purchase</button>

@@ -10,6 +10,7 @@ if (isset($_SESSION['admin_id'])) {
     redirect('user/dashboard.php');
 }
 
+
 $login_error_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
