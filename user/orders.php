@@ -12,7 +12,7 @@ $user_id = $_SESSION['user_id'];
 
 // Fetch user's orders from database
 $sql = "SELECT * FROM orders WHERE user_id='$user_id'";
-$result = $conn->query($sql);
+$orders_result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,13 +25,37 @@ $result = $conn->query($sql);
 <body>
     <h1>My Orders</h1>
     <?php
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
+    if ($orders_result->num_rows > 0) {
+        while ($order = $orders_result->fetch_assoc()) {
             echo "<div>";
-            echo "<p>Order ID: {$row['id']}</p>";
-            echo "<p>Order Details: {$row['details']}</p>";
-            echo "<p>Total Price: {$row['total_price']}</p>";
-            echo "</div>";
+            echo "<p>Order ID: {$order['id']}</p>";
+            echo "<p>Order Date: {$order['created_at']}</p>";
+            echo "<p>Total Price: ₦{$order['total_price']}</p>";
+            
+            // Fetch order items
+            $order_id = $order['id'];
+            $sql = "SELECT images.title, images.filename, images.price 
+                    FROM order_items 
+                    JOIN images ON order_items.image_id = images.id 
+                    WHERE order_items.order_id='$order_id'";
+            $items_result = $conn->query($sql);
+            
+            if ($items_result->num_rows > 0) {
+                echo "<h3>Purchased Images:</h3>";
+                echo "<div class='order-items'>";
+                while ($item = $items_result->fetch_assoc()) {
+                    echo "<div class='order-item'>";
+                    echo "<img src='./images/{$item['filename']}' alt='{$item['title']}'><br>";
+                    echo "<p>{$item['title']}</p>";
+                    echo "<p>Price: ₦{$item['price']}</p>";
+                    echo "</div>";
+                }
+                echo "</div>";
+            } else {
+                echo "<p>No items found for this order.</p>";
+            }
+            
+            echo "</div><hr>";
         }
     } else {
         echo "No orders found.";

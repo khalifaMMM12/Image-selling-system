@@ -19,7 +19,7 @@ if ($result->num_rows > 0) {
     $total_price = 0;
 
     while ($row = $result->fetch_assoc()) {
-        $order_details .= "Image: {$row['title']} - Price: \${$row['price']}\n";
+        $order_details .= "Image: {$row['title']} - Price: ₦{$row['price']}\n";
         $total_price += $row['price'];
     }
 

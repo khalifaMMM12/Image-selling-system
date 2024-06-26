@@ -33,7 +33,7 @@ $result = $conn->query($sql);
                 echo "<img src='../images/{$row['filename']}' alt='{$row['title']}'><br>";
                 echo "<h3>{$row['title']}</h3>";
                 echo "<p>{$row['description']}</p>";
-                echo "<p>Price: \${$row['price']}</p>";
+                echo "<p>Price: ₦{$row['price']}</p>";
                 $total_price += $row['price'];
                 echo "</div>";
             }
