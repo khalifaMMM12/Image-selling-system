@@ -21,7 +21,7 @@ if (!isset($_SESSION['admin_id'])) {
         <ul>
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="manage_users.php">Manage Users</a></li>
-            <li><a href="manage_images.php">Manage Images</a></li>
+            <li><a href="admin_approve.php">Manage Images</a></li>
             <li><a href="manage_orders.php">Manage Orders</a></li>
             <li><a href="../logout.php">Logout</a></li>
         </ul>

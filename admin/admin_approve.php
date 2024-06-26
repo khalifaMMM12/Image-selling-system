@@ -48,7 +48,7 @@ $result = $conn->query($sql);
             echo "<p>Title: {$row['title']}</p>";
             echo "<p>Description: {$row['description']}</p>";
             echo "<p>Price: {$row['price']}</p>";
-            echo "<a href='admin_approve_images.php?approve={$row['image_id']}'>Approve</a>";
+            echo "<a href='admin_approve.php?approve={$row['image_id']}'>Approve</a>";
             echo "</div><hr>";
         }
     } else {
