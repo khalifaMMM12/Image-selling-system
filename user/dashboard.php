@@ -40,7 +40,7 @@ $result = $conn->query($sql);
                 echo "<img src='../images/{$row['filename']}' alt='{$row['title']}'><br>";
                 echo "<h3>{$row['title']}</h3>";
                 echo "<p>{$row['description']}</p>";
-                echo "<p>Price: \₦{$row['price']}</p>";
+                echo "<p>Price: ₦{$row['price']}</p>";
                 echo "<form method='post' action='add_to_cart.php'>";
                 echo "<input type='hidden' name='image_id' value='{$row['id']}'>";
                 echo "<button type='submit'>Add to Cart</button>";
