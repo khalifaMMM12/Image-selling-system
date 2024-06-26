@@ -13,6 +13,9 @@ $user_id = $_SESSION['user_id'];
 // Fetch cart items from database
 $sql = "SELECT images.* FROM cart JOIN images ON cart.image_id = images.image_id WHERE cart.user_id='$user_id'";
 $result = $conn->query($sql);
+
+// Initialize total price
+$total_price = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,16 +39,18 @@ $result = $conn->query($sql);
     <h1>My Cart</h1>
     <div class="cart-container">
         <?php
-        $total_price = 0;
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<div class='cart-item'>";
-                echo "<img src='../images/{$row['filename']}' alt='{$row['title']}'><br>";
-                echo "<h3>{$row['title']}</h3>";
-                echo "<p>{$row['description']}</p>";
-                echo "<p>Price: ₦{$row['price']}</p>";
                 $total_price += $row['price'];
-                echo "</div>";
+                ?>
+                <div class='cart-item'>
+                    <img src='../images/<?php echo $row['filename']; ?>' alt='<?php echo $row['title']; ?>'><br>
+                    <h3><?php echo $row['title']; ?></h3>
+                    <p><?php echo $row['description']; ?></p>
+                    <p>Price: ₦<?php echo $row['price']; ?></p>
+                    <a href='remove_from_cart.php?image_id=<?php echo $row['image_id']; ?>'>Remove</a>
+                </div>
+                <?php
             }
         } else {
             echo "Your cart is empty.";
