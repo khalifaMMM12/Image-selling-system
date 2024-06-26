@@ -23,6 +23,16 @@ $orders_result = $conn->query($sql);
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="cart.php">Cart</a></li>
+            <li><a href="orders.php">My Orders</a></li>
+            <li><a href="upload_image.php">Upload Image</a></li>
+            <li><a href="purchased_images.php">Purchased Images</a></li>
+            <li><a href="../logout.php">Logout</a></li>
+        </ul>
+    </nav>
     <h1>My Orders</h1>
     <?php
     if ($orders_result->num_rows > 0) {

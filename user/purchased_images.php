@@ -23,6 +23,16 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="cart.php">Cart</a></li>
+            <li><a href="orders.php">My Orders</a></li>
+            <li><a href="upload_image.php">Upload Image</a></li>
+            <li><a href="purchased_images.php">Purchased Images</a></li>
+            <li><a href="../logout.php">Logout</a></li>
+        </ul>
+    </nav>
     <h1>My Purchased Images</h1>
     <div class="image-container">
         <?php

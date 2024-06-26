@@ -29,6 +29,16 @@ if (!$image) {
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="cart.php">Cart</a></li>
+            <li><a href="orders.php">My Orders</a></li>
+            <li><a href="upload_image.php">Upload Image</a></li>
+            <li><a href="purchased_images.php">Purchased Images</a></li>
+            <li><a href="../logout.php">Logout</a></li>
+        </ul>
+    </nav>
     <h1><?php echo $image['title']; ?></h1>
     <img src="../images/<?php echo $image['filename']; ?>" alt="<?php echo $image['title']; ?>">
     <p><?php echo $image['description']; ?></p>
