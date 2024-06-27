@@ -8,18 +8,20 @@ if (!isset($_SESSION['user_id'])) {
     redirect('login.php');
 }
 
+$user_id = $_SESSION['user_id'];
+
+// Check if image_id is provided
 if (isset($_GET['image_id'])) {
     $image_id = sanitize_input($_GET['image_id']);
-    $user_id = $_SESSION['user_id'];
-
+    
     // Remove item from cart
-    $sql = "DELETE FROM cart WHERE image_id='$image_id' AND user_id='$user_id'";
+    $sql = "DELETE FROM cart WHERE user_id='$user_id' AND image_id='$image_id'";
     if ($conn->query($sql) === TRUE) {
-        echo "Item removed from cart.";
+        redirect('cart.php');
     } else {
         echo "Error: " . $conn->error;
     }
+} else {
+    redirect('cart.php');
 }
-
-redirect('cart.php');
 ?>

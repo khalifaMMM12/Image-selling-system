@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-    // Check if image file is a actual image or fake image
+    // Check if image file is an actual image or fake image
     $check = getimagesize($_FILES["image"]["tmp_name"]);
     if ($check !== false) {
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
@@ -27,15 +27,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Insert image details into database with approved set to FALSE
             $sql = "INSERT INTO images (title, description, price, filename, user_id, approved) VALUES ('$title', '$description', '$price', '$filename', '$user_id', FALSE)";
             if ($conn->query($sql) === TRUE) {
-                echo "Image uploaded successfully and is pending approval.";
+                $message = "Image uploaded successfully and is pending approval.";
             } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
+                $error = "Error: " . $sql . "<br>" . $conn->error;
             }
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            $error = "Sorry, there was an error uploading your file.";
         }
     } else {
-        echo "File is not an image.";
+        $error = "File is not an image.";
     }
 }
 ?>
@@ -45,29 +45,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Image</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/upload_image.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="dashboard.php">Dashboard</a></li>
-            <li><a href="cart.php">Cart</a></li>
-            <li><a href="orders.php">My Orders</a></li>
-            <li><a href="upload_image.php">Upload Image</a></li>
-            <li><a href="purchased_images.php">Purchased Images</a></li>
-            <li><a href="contact_us.php">Contact Us</a></li>
-            <li><a href="../logout.php">Logout</a></li>
-        </ul>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="dashboard.php">Image Shop</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="orders.php"><i class="fas fa-box"></i> My Orders</a></li>
+                <li class="nav-item"><a class="nav-link" href="upload_image.php"><i class="fas fa-upload"></i> Upload Image</a></li>
+                <li class="nav-item"><a class="nav-link" href="purchased_images.php"><i class="fas fa-image"></i> Purchased Images</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact_us.php"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
     </nav>
-    <h1>Upload Image</h1>
-    <form method="post" enctype="multipart/form-data">
-        <input type="text" name="title" placeholder="Title" required><br>
-        <textarea name="description" placeholder="Description" required></textarea><br>
-        <input type="text" name="price" placeholder="Price" required><br>
-        <input type="file" name="image" required><br>
-        <button type="submit">Upload</button>
-    </form>
-    <br>
-    <a href="dashboard.php">Back to Dashboard</a>
+    <div class="container mt-5">
+        <h1>Upload Image</h1>
+        <?php if (isset($message)): ?>
+            <div class="alert alert-success"><?php echo $message; ?></div>
+        <?php elseif (isset($error)): ?>
+            <div class="alert alert-danger"><?php echo $error; ?></div>
+        <?php endif; ?>
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" class="form-control" placeholder="Title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" class="form-control" placeholder="Description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" name="price" id="price" class="form-control" placeholder="Price" required>
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" name="image" id="image" class="form-control-file" required>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-upload"></i> Upload</button>
+        </form>
+        <br>
+        <a href="dashboard.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

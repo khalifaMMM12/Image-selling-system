@@ -23,48 +23,62 @@ $total_price = 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Cart</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/cart.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="dashboard.php">Dashboard</a></li>
-            <li><a href="cart.php">Cart</a></li>
-            <li><a href="orders.php">My Orders</a></li>
-            <li><a href="upload_image.php">Upload Image</a></li>
-            <li><a href="purchased_images.php">Purchased Images</a></li>
-            <li><a href="contact_us.php">Contact Us</a></li>
-            <li><a href="../logout.php">Logout</a></li>
-        </ul>
+    <nav class="navbar navbar-expand-lg ">
+        <a class="navbar-brand" href="dashboard.php">ImageShop</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="orders.php"><i class="fas fa-box"></i> My Orders</a></li>
+                <li class="nav-item"><a class="nav-link" href="upload_image.php"><i class="fas fa-upload"></i> Upload Image</a></li>
+                <li class="nav-item"><a class="nav-link" href="purchased_images.php"><i class="fas fa-image"></i> Purchased Images</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact_us.php"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
     </nav>
-    <h1>My Cart</h1>
-    <div class="cart-container">
-        <?php
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $total_price += $row['price'];
-                ?>
-                <div class='cart-item'>
-                    <img src='../images/<?php echo $row['filename']; ?>' alt='<?php echo $row['title']; ?>'><br>
-                    <h3><?php echo $row['title']; ?></h3>
-                    <p><?php echo $row['description']; ?></p>
-                    <p>Price: ₦<?php echo $row['price']; ?></p>
-                    <a href='remove_from_cart.php?image_id=<?php echo $row['image_id']; ?>'>Remove</a>
-                </div>
-                <?php
+    <div class="container mt-5">
+        <h1>My Cart</h1>
+        <div class="row">
+            <?php
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $total_price += $row['price'];
+                    ?>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <img src="../images/<?php echo $row['filename']; ?>" class="card-img-top" alt="<?php echo $row['title']; ?>">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $row['title']; ?></h5>
+                                <p class="card-text"><?php echo $row['description']; ?></p>
+                                <p class="card-text">Price: ₦<?php echo $row['price']; ?></p>
+                                <a href='remove_from_cart.php?image_id=<?php echo $row['image_id']; ?>' class="btn btn-danger"><i class="fas fa-trash-alt"></i> Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+            } else {
+                echo "<div class='col-12'><p class='alert alert-warning'>Your cart is empty.</p></div>";
             }
-        } else {
-            echo "Your cart is empty.";
-        }
-        ?>
+            ?>
+        </div>
+        <h2>Total Price: ₦<?php echo $total_price; ?></h2>
+        <?php if ($total_price > 0) : ?>
+            <form method="post" action="../purchase.php">
+                <button type="submit" class="btn btn-success"><i class="fas fa-credit-card"></i> Proceed to Purchase</button>
+            </form>
+        <?php endif; ?>
+        <br>
+        <a href="dashboard.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-    <h2>Total Price: ₦<?php echo $total_price; ?></h2>
-    <?php if ($total_price > 0) : ?>
-        <form method="post" action="../purchase.php">
-            <button type="submit">Proceed to Purchase</button>
-        </form>
-    <?php endif; ?>
-    <br>
-    <a href="dashboard.php">Back to Dashboard</a>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

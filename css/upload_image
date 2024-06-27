@@ -1,0 +1,39 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    background: rgb(62, 145, 255);
+    color: white;
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #dcdcdc !important;
+}
+
+.container {
+    max-width: 600px;
+}
+
+h1 {
+    text-align: center;
+    color: #343a40;
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    margin-bottom: 15px;
+}
+
+.alert {
+    text-align: center;
+}
