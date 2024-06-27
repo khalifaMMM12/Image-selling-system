@@ -36,6 +36,7 @@ if (!$image) {
             <li><a href="orders.php">My Orders</a></li>
             <li><a href="upload_image.php">Upload Image</a></li>
             <li><a href="purchased_images.php">Purchased Images</a></li>
+            <li><a href="contact_us.php">Contact Us</a></li>
             <li><a href="../logout.php">Logout</a></li>
         </ul>
     </nav>
