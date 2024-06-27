@@ -1,48 +1,16 @@
 <?php
 session_start();
-include_once 'includes/db.php';
-include_once 'includes/function.php';
+include_once '../includes/db.php';
+include_once '../includes/function.php';
 
-// Redirect if already logged in
-if (isset($_SESSION['admin_id'])) {
-    redirect('admin/dashboard.php');
-} elseif (isset($_SESSION['user_id'])) {
-    redirect('user/dashboard.php');
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    redirect('../index.php');
 }
 
-
-$login_error_message = '';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = sanitize_input($_POST['username'] ); 
-    $password = sanitize_input($_POST['password']);
-    $role = sanitize_input($_POST['role']);
-
-    if ($role == 'admin') {
-        $sql = "SELECT * FROM admins WHERE username='$username'";
-    } else {
-        $sql = "SELECT * FROM users WHERE username='$username'";
-    }
-
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password'])) {
-            if ($role == 'admin') {
-                $_SESSION['admin_id'] = $user['id'];
-                redirect('admin/admin_approve.php');
-            } else {
-                $_SESSION['user_id'] = $user['id'];
-                redirect('user/dashboard.php');
-            }
-        } else {
-            $login_error_message = 'Invalid password.';
-        }
-    } else {
-        $login_error_message = 'No user found with that username.';
-    }
-}
+// Fetch all images from database
+$sql = "SELECT * FROM images WHERE approved=TRUE";
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -50,29 +18,62 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="../css/index.css">
 </head>
 <body>
-    <h1>Login</h1>
-    <form method="post" action="">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <label for="role">Role:</label>
-        <select id="role" name="role" required>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-        </select>
-        <br>
-        <button type="submit">Login</button>
-        <?php if ($login_error_message): ?>
-            <p><?php echo $login_error_message; ?></p>
-        <?php endif; ?>
-    </form>
-    <p>Don't have an account? <a href="user/register.php">Register here</a></p>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="dashboard.php">ImageShop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="orders.php"><i class="fas fa-box"></i> My Orders</a></li>
+                <li class="nav-item"><a class="nav-link" href="upload_image.php"><i class="fas fa-upload"></i> Upload Image</a></li>
+                <li class="nav-item"><a class="nav-link" href="purchased_images.php"><i class="fas fa-images"></i> Purchased Images</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact_us.php"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Image Catalog</h1>
+        <div class="row">
+            <?php
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<div class='col-md-4 mb-4'>";
+                    echo "<div class='card'>";
+                    echo "<img src='../images/{$row['filename']}' class='card-img-top' alt='{$row['title']}'>";
+                    echo "<div class='card-body'>";
+                    echo "<h5 class='card-title'>{$row['title']}</h5>";
+                    echo "<p class='card-text'>{$row['description']}</p>";
+                    echo "<p class='card-text'>Price: ₦{$row['price']}</p>";
+                    echo "<form method='post' action='../add_to_cart.php'>";
+                    echo "<input type='hidden' name='image_id' value='{$row['image_id']}'>";
+                    echo "<button type='submit' class='btn btn-primary btn-block'><i class='fas fa-cart-plus'></i> Add to Cart</button>";
+                    echo "</form>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+                }
+            } else {
+                echo "<div class='col-12'>";
+                echo "<p class='text-center'>No images available.</p>";
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
