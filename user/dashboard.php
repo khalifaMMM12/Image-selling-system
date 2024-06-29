@@ -5,7 +5,7 @@ include_once '../includes/function.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    redirect('./index.php');
+    redirect('../index.php');
 }
 
 // Fetch all images from database

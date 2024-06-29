@@ -5,7 +5,7 @@ include_once '../includes/function.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    redirect('login.php');
+    redirect('../index.php');
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

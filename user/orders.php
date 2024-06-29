@@ -5,7 +5,7 @@ include_once '../includes/function.php';
 
 // Check if user is logged in
 if (!is_logged_in()) {
-    redirect('login.php');
+    redirect('../index.php');
 }
 
 $user_id = $_SESSION['user_id'];

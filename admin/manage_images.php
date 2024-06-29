@@ -5,7 +5,7 @@ include_once '../includes/function.php';
 
 // Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
-    redirect('login.php');
+    redirect('../index.php');
 }
 
 // Fetch all images from database

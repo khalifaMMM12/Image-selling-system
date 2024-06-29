@@ -5,7 +5,7 @@ include_once '../includes/function.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    redirect('login.php');
+    redirect('../index.php');
 }
 
 $image_id = sanitize_input($_GET['id']);
