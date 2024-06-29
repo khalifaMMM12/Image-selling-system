@@ -26,7 +26,8 @@ $result = $conn->query($sql);
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="manage_users.php">Users</a></li>
             <li><a href="admin_approve.php">images</a></li>
-            <li><a href="manage_orders.php">Manage Orders</a></li>
+            <li><a href="manage_orders.php">Orders
+</a></li>
             <li><a href="manage_message.php">Feedbacks</a></li>
             <li><a href="../logout.php">Logout</a></li>
         </ul>
