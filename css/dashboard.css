@@ -116,3 +116,18 @@ body {
 .image button:hover {
     background-color: #0056b3;
 }
+
+.cart-notification {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-dot {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    height: 10px;
+    width: 10px;
+    background-color: red;
+    border-radius: 50%;
+}
