@@ -1,40 +1,102 @@
+/* General Styles */
 body {
-    background-color: #f8f9fa;
+    /* background: linear-gradient(135deg, #dcdcdc 25%, #f5f5f5 100%); */
+    color: #333; /* Dark gray for text */
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #a8a8a8, #ffffff);
+    min-height: 100vh;
+    color: #333; /* Adjust text color for contrast */
 }
 
-.navbar {
-    background: rgb(62, 145, 255);
-    color: white;
-}
-
-.navbar-nav .nav-link {
-    color: #ffffff !important;
-}
-
-.navbar-nav .nav-link:hover {
-    color: #dcdcdc !important;
-}
-
-.container {
+/* Container */
+.container {        
     max-width: 600px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background for content areas */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+/* Header */
 h1 {
-    text-align: center;
-    color: #343a40;
+    color: #444;
+    font-size: 2rem;
     margin-bottom: 30px;
+    font-weight: bold;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 20px;
 }
 
 .form-group label {
     font-weight: bold;
+    color: #555555;
 }
 
+.form-control {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 45px;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #888; /* Darker ash on focus */
+    box-shadow: none;
+}
+
+/* Buttons */
 .btn-primary {
-    background-color: #1c92d2;
-    border-color: #1c92d2;
+    background-color: #555555; /* Medium-dark ash */
+    border-color: #555555;
+    color: #ffffff;
+    font-size: 1.1rem;
+    padding: 10px;
+    transition: background-color 0.3s, border-color 0.3s;
+    border-radius: 5px;
 }
 
 .btn-primary:hover {
-    background-color: #1b8cd1;
-    border-color: #1b8cd1;
+    background-color: #333333; /* Dark ash on hover */
+    border-color: #333333;
+}
+
+.btn-secondary {
+    background-color: #888888; /* Dark ash */
+    border-color: #888888;
+    color: #ffffff;
+    margin-top: 20px;
+}
+
+.btn-secondary:hover {
+    background-color: #555555; /* Medium-dark ash */
+    border-color: #555555;
+}
+
+/* Alerts */
+.alert {
+    font-weight: bold;
+    color: #721c24;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        font-size: 1rem;
+    }
 }

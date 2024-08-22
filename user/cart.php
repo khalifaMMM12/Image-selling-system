@@ -8,6 +8,11 @@ if (!isset($_SESSION['user_id'])) {
     redirect('../index.php');
 }
 
+// If the user views the cart, reset the cart notification
+if (isset($_SESSION['cart_updated'])) {
+    unset($_SESSION['cart_updated']);
+}
+
 $user_id = $_SESSION['user_id'];
 
 // Fetch cart items from database
@@ -70,7 +75,8 @@ $total_price = 0;
         </div>
         <h2>Total Price: ₦<?php echo $total_price; ?></h2>
         <?php if ($total_price > 0) : ?>
-            <form method="post" action="../purchase.php">
+            <form method="post" action="payment.php">
+                <input type="hidden" name="total_price" value="<?php echo $total_price; ?>">
                 <button type="submit" class="btn btn-success"><i class="fas fa-credit-card"></i> Proceed to Purchase</button>
             </form>
         <?php endif; ?>

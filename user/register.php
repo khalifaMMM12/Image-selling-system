@@ -38,26 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../css/register.css">
 </head>
 <body>
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="dashboard.php"><i class="fas fa-home"></i> Dashboard</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i> Cart</a></li>
-                <li class="nav-item"><a class="nav-link" href="orders.php"><i class="fas fa-box"></i> My Orders</a></li>
-                <li class="nav-item"><a class="nav-link" href="upload_image.php"><i class="fas fa-upload"></i> Upload Image</a></li>
-                <li class="nav-item"><a class="nav-link" href="purchased_images.php"><i class="fas fa-image"></i> Purchased Images</a></li>
-                <li class="nav-item"><a class="nav-link" href="contact_us.php"><i class="fas fa-envelope"></i> Contact Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-            </ul>
-        </div>
-    </nav> -->
-    <div class="container mt-5">
+    <div class="container">
         <h1 class="text-center">User Registration</h1>
         <?php if (isset($feedback)): ?>
             <div class="alert alert-info text-center"><?php echo $feedback; ?></div>
         <?php endif; ?>
-        <form method="post" action="register.php" class="mt-4">
+        <form method="post" action="register.php">
             <div class="form-group">
                 <label for="username"><i class="fas fa-user"></i> Username</label>
                 <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>

@@ -71,7 +71,7 @@ $result = $conn->query($sql);
             }
             ?>
         </div>
-        <a href="dashboard.php" class="btn btn-secondary mt-4"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        <!-- <a href="dashboard.php" class="btn btn-secondary mt-4"><i class="fas fa-arrow-left"></i> Back to Dashboard</a> -->
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
