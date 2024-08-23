@@ -108,7 +108,7 @@ if (isset($_SESSION['payment_verified']) && $_SESSION['payment_verified'] === tr
                 </div>
                 <div class="modal-footer">
                     <a href="dashboard.php" class="btn btn-primary">Go to Dashboard</a>
-                    <a href="purchased_images.php" class="btn btn-secondary">View Purchased Images</a>
+                    <a href="purchased_images.php" class="btn btn-secondary">View Purchased Image</a>
                 </div>
             </div>
         </div>
