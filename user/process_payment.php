@@ -26,7 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $sql_order = "INSERT INTO orders (user_id, total_price, created_at) VALUES ('$user_id', '$total_price', NOW())";
             if ($conn->query($sql_order) === TRUE) {
                 $_SESSION['success_message'] = "Payment successful and order placed!";
-                redirect('orders.php');
+                $_SESSION['payment_verified'] = true;  // Set this to trigger the modal
+                $_SESSION['total_price'] = 0;  // Clear the cart total price
+                redirect('payment.php');  // Redirect to payment page to show the modal
             } else {
                 $_SESSION['error_message'] = "Failed to place the order.";
                 redirect('cart.php');
@@ -43,4 +45,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['error_message'] = "Invalid request method.";
     redirect('cart.php');
 }
-?>

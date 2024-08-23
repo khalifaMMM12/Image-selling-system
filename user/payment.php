@@ -22,6 +22,13 @@ if ($total_price == 0) {
     $_SESSION['error_message'] = "No items in your cart to proceed with payment.";
     redirect('cart.php');
 }
+
+if (isset($_SESSION['payment_verified']) && $_SESSION['payment_verified'] === true) {
+    $showModal = true;
+    unset($_SESSION['payment_verified']);
+} else {
+    $showModal = false;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +58,7 @@ if ($total_price == 0) {
 
     <div class="container mt-5">
         <h1 class="text-center">Payment</h1>
-        <form action="process_payment.php" method="POST">
+        <form id="payment-form">
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <div class="form-group">
@@ -80,14 +87,45 @@ if ($total_price == 0) {
                         <label>Total Amount</label>
                         <input type="text" class="form-control" value="₦<?php echo number_format($total_price, 2); ?>" readonly>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-credit-card"></i> Pay Now</button>
+                    <button type="button" id="payNowBtn" class="btn btn-primary btn-block"><i class="fas fa-credit-card"></i> Pay Now</button>
                 </div>
             </div>
         </form>
     </div>
 
+    <!-- Payment Success Modal -->
+    <div class="modal fade" id="paymentSuccessModal" tabindex="-1" aria-labelledby="paymentSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentSuccessModalLabel">Payment Verified</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Your payment has been successfully verified. Thank you for your purchase!</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="dashboard.php" class="btn btn-primary">Go to Dashboard</a>
+                    <a href="purchased_images.php" class="btn btn-secondary">View Purchased Images</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.getElementById('payNowBtn').addEventListener('click', function (e) {
+            // Simulate payment processing
+            setTimeout(function() {
+                // Simulate payment success by showing the modal
+                $('#paymentSuccessModal').modal('show');
+            }, 1000); // Simulate a 1-second delay for processing
+        });
+    </script>
 </body>
 </html>
